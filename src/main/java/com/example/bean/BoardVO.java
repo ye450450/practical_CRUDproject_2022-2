@@ -10,6 +10,8 @@ public class BoardVO {
 	private Date regdate;
 	private int cnt;
 	private String category;
+	private String photo;
+	private String viewdate;
 	
 	public int getSeq() {
 		return seq;
@@ -54,5 +56,21 @@ public class BoardVO {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public String getViewdate() {
+		return viewdate;
+	}
+
+	public void setViewdate(String viewdate) {
+		this.viewdate = viewdate;
 	}
 }

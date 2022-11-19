@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@page import="com.example.dao.BoardDAO,com.example.bean.BoardVO,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>free board</title>
+<title>영화 감상평 목록</title>
 <style>
 #list {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -36,7 +38,7 @@
 </script>
 </head>
 <body>
-<h1>자유게시판</h1>
+<h1>영화감상평목록</h1>
 <%
 	BoardDAO boardDAO = new BoardDAO();
 	List<BoardVO> list = boardDAO.getBoardList();
@@ -44,28 +46,32 @@
 %>
 <table id="list" width="90%">
 <tr>
-	<th>Id</th>
-	<th>Category</th>>
-	<th>Title</th>
-	<th>Writer</th>
-	<th>Content</th>
-	<th>Regdate</th>
-	<th>Edit</th>
-	<th>Delete</th>
+	<th>번호</th>
+	<th>카테고리</th>>
+	<th>제목</th>
+	<th>감독</th>
+	<th>느낀점</th>
+	<th>작성일</th>
+	<th>감상날짜</th>
+	<th>사진</th>
+	<th>수정</th>
+	<th>삭제</th>
 </tr>
-<c:forEach items="${list}" var="u">
+<c:forEach items="${list}" var="u" varStatus="status">
 	<tr>
-		<td>${u.getSeq()}</td>
+		<td>${fn:length(list)-status.index}</td>
 		<td>${u.getCategory()}</td>
 		<td>${u.getTitle()}</td>
 		<td>${u.getWriter()}</td>
 		<td>${u.getContent()}</td>
 		<td>${u.getRegdate()}</td>
-		<td><a href="editform.jsp?id=${u.getSeq()}">Edit</a></td>
-		<td><a href="javascript:delete_ok('${u.getSeq()}')">Delete</a></td>
+		<td>${u.getViewdate()}</td>
+		<td><c:if test="${u.getPhoto() ne ''}"><br /><img src ="${pageContext.request.contextPath}/upload/${u.getPhoto()}" class="photo"></c:if></td>
+		<td><a href="editform.jsp?id=${u.getSeq()}">수정하기</a></td>
+		<td><a href="javascript:delete_ok('${u.getSeq()}')">삭제하기</a></td>
 	</tr>
 </c:forEach>
 </table>
-<br/><a href="addpostform.jsp">Add New Post</a>
+<br/><a href="addpostform.jsp">새 감상평 작성하기</a>
 </body>
 </html>
